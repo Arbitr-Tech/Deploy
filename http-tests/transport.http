@@ -1,0 +1,97 @@
+@baseUrl = http://localhost:8080/api/v1/transports
+
+### Метод для регистрации компании
+POST http://localhost:8080/api/v1/auth/register/
+Content-Type: application/json
+
+{
+  "username": "sagid123",
+  "email": "sagid@mail.com",
+  "password": "SecurePass456!",
+  "legalType": "INDIVIDUAL",
+  "role": "CARRIER"
+}
+
+### Метод для авторизации
+POST http://localhost:8080/api/v1/auth/login/
+Content-Type: application/json
+
+{
+  "email": "sagid@mail.com",
+  "password": "SecurePass456!"
+}
+
+> {%
+    client.global.set("access_token", response.body.access_token);
+%}
+
+###
+@driverId=cb2ddc1f-5141-4286-bc85-88b5649f2db1
+@trailerId=5a9aecb5-abe0-4a78-b587-1f638ac1dcad
+
+### Метод для создания транспорта
+POST {{baseUrl}}//
+Authorization: Bearer {{access_token}}
+Content-Type: application/json
+
+{
+  "driverId": "{{driverId}}",
+  "brand": "Volvo",
+  "model": "FH16",
+  "manufactureYear": 2020,
+  "transportNumber": "A123BC",
+  "embeddedTrailerDetails": {
+    "liftingCapacity": 10000,
+    "bodyType": "Тент",
+    "loadType": "Верхняя",
+    "unloadType": "Задняя",
+    "length": 10,
+    "width": 3,
+    "height": 3,
+    "volume": 30
+  },
+  "trailersIds": [
+    "{{trailerId}}"
+  ]
+}
+
+### Получение деталей транспортов с пагинацией
+GET {{baseUrl}}//?pageNumber=1&pageSize=5
+Authorization: Bearer {{access_token}}
+
+###
+@transportId=838a2564-f08b-4de5-b63e-b2bf3e4a9124
+
+### Получение деталей транспорта
+GET {{baseUrl}}/{{transportId}}/
+Authorization: Bearer {{access_token}}
+Content-Type: application/json
+
+### Обновление деталей транспорта
+PATCH {{baseUrl}}/{{transportId}}/
+Authorization: Bearer {{access_token}}
+Content-Type: application/json
+
+{
+    "brand": "Volvo",
+    "model": "FH16",
+    "manufactureYear": 2024,
+    "transportNumber": "A123BC",
+    "embeddedTrailerDetails": {
+        "liftingCapacity": 10000,
+        "bodyType": "Тент",
+        "loadType": "Верхняя",
+        "unloadType": "Задняя",
+        "length": 10,
+        "width": 3,
+        "height": 3,
+        "volume": 30
+    },
+    "trailersIds": [
+        "{{trailerId}}"
+    ]
+}
+
+### Удаление транспорта
+DELETE {{baseUrl}}/{{transportId}}/
+Authorization: Bearer {{access_token}}

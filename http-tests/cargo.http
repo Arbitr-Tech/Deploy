@@ -1,0 +1,111 @@
+@baseUrl = http://localhost:8080/api/v1/cargos
+
+### Метод для авторизации
+POST http://localhost:8080/api/v1/auth/login/
+Content-Type: application/json
+
+{
+  "email": "annten1@mail.com",
+  "password": "SecurePass456!"
+}
+
+> {%
+    client.global.set("access_token", response.body.access_token);
+%}
+
+### Метод для создания груза
+POST {{baseUrl}}//
+Authorization: Bearer {{access_token}}
+Content-Type: application/json
+
+{
+  "name": "машина",
+  "description": " машина для гонок",
+  "weight": 1200,
+  "volume": 90,
+  "loadType": "Задняя",
+  "unloadType": "Задняя",
+  "bodyType": "Тент",
+  "dimensions": {
+    "length": 120,
+    "width": 50,
+    "height": 20
+  },
+  "route": {
+    "from": "New York",
+    "to": "Los Angeles"
+  },
+  "price": 5000000,
+  "typePay": "НДС",
+  "readyDate": "2025-05-22",
+  "deliveryDate": "2025-06-01"
+}
+
+### Получение списка груза [INTERNAL, EXTERNAL, HISTORY]
+GET {{baseUrl}}/general/?cargoCategory=INTERNAL&pageNumber=1&pageSize=5
+Authorization: Bearer {{access_token}}
+Accept: application/json
+
+### f34f357b-ba53-454e-8f11-74e8afcf97cf
+@cargo_uuid = 076b025d-f7e7-4c80-ae61-21df94a1173e
+
+### Получение деталей груза
+GET {{baseUrl}}/{{cargo_uuid}}/
+Authorization: Bearer {{access_token}}
+Accept: application/json
+
+### Публикация записи
+PATCH {{baseUrl}}/{{cargo_uuid}}/publish
+Authorization: Bearer {{access_token}}
+Accept: application/json
+
+### Снятие записи с публикации
+PATCH {{baseUrl}}/{{cargo_uuid}}/draft
+Authorization: Bearer {{access_token}}
+Accept: application/json
+
+### Обновление записи о грузе
+PATCH {{baseUrl}}/{{cargo_uuid}}/
+Authorization: Bearer {{access_token}}
+Content-Type: application/json
+
+{
+  "name": "Box",
+  "description": "Большая коробка",
+  "weight": 10,
+  "volume": 1000,
+  "loadType": "Задняя",
+  "unloadType": "Задняя",
+  "bodyType": "Тент",
+  "dimensions": {
+    "length": 10,
+    "width": 5,
+    "height": 20
+  },
+  "route": {
+    "from": "New York",
+    "to": "Los Angeles"
+  },
+  "price": 10000,
+  "typePay": "НДС",
+  "readyDate": "2025-05-22",
+  "deliveryDate": "2025-06-01"
+}
+
+### Удаление записи груза
+DELETE {{baseUrl}}/{{cargo_uuid}}/
+Authorization: Bearer {{access_token}}
+Content-Type: application/json
+
+### Запрос на получение списка записей грузов
+POST {{baseUrl}}/search/?pageNumber=1&pageSize=5
+Content-Type: application/json
+Accept: application/json
+
+{
+    "priceTo": 5000000.00
+}
+
+### Получение списка последних 5 грузов
+GET {{baseUrl}}/last5/
+Accept: application/json

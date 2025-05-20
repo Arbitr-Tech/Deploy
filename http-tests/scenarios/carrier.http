@@ -1,0 +1,147 @@
+@transportUrl=http://localhost:8080/api/v1/transports
+@cargoUrl=http://localhost:8080/api/v1/cargos
+@driverUrl=http://localhost:8080/api/v1/drivers
+@trailersUrl=http://localhost:8080/api/v1/trailers
+@reviewUrl=http://localhost:8080/api/v1/reviews
+
+### Метод для регистрации компании
+POST http://localhost:8080/api/v1/auth/register/
+Content-Type: application/json
+
+{
+  "username": "sagid123",
+  "email": "sagid@mail.com",
+  "password": "SecurePass456!",
+  "legalType": "INDIVIDUAL",
+  "role": "CARRIER"
+}
+
+### Метод для авторизации
+POST http://localhost:8080/api/v1/auth/login/
+Content-Type: application/json
+
+{
+  "email": "sagid@mail.com",
+  "password": "SecurePass456!"
+}
+
+> {%
+    client.global.set("access_token", response.body.access_token);
+%}
+
+### Метод для создания записи о [водителе]
+POST {{driverUrl}}//
+Authorization: Bearer {{access_token}}
+Content-Type: application/json
+
+{
+  "fullName": "Алексей Яковлев",
+  "licenseCategory": "A",
+  "licenseNumber": "0319 445115",
+  "issueDate": "2023-04-30",
+  "expirationDate": "2033-04-30"
+}
+
+###
+@driverId=5fd53fc1-5ced-4415-bed6-d20a062dd5d5
+
+### Метод для создания записи о [прицепе]
+POST {{trailersUrl}}//
+Authorization: Bearer {{access_token}}
+Content-Type: application/json
+
+{
+  "name": "Мерседес Бенц",
+  "trailerNumber": "АВ1234",
+  "liftingCapacity": 10000,
+  "bodyType": "Тент",
+  "loadType": "Верхняя",
+  "unloadType": "Задняя",
+  "length": 10,
+  "width": 3,
+  "height": 3,
+  "volume": 30
+}
+
+###
+@trailerId=631a9ef2-db16-47ee-be5b-a4e91af59ed2
+
+### Метод для создания записи о транспорте
+POST {{transportUrl}}//
+Authorization: Bearer {{access_token}}
+Content-Type: application/json
+
+{
+  "driverId": "{{driverId}}",
+  "brand": "Volvo",
+  "model": "FH16",
+  "manufactureYear": 2020,
+  "transportNumber": "A123BC",
+
+  "trailersIds": [
+    "{{trailerId}}"
+  ]
+}
+
+### Метод для получения записи о транспортах
+GET {{transportUrl}}//?pageNumber=1&pageSize=5
+Authorization: Bearer {{access_token}}
+Accept: application/json
+
+###
+@transport_id=60f0b561-6364-405c-8df2-4d6c0e1922fa
+
+### Запрос на получение списка записей грузов
+POST {{cargoUrl}}/search/?pageNumber=1&pageSize=5
+Authorization: Bearer {{access_token}}
+Content-Type: application/json
+Accept: application/json
+
+{
+  "priceTo": 5000000.00
+}
+
+###
+@cargo_order_id=0f0f6229-3f07-4a1e-99bd-36bdccd46c6d
+
+### Создать отклик от перевозчика на груз
+POST {{cargoUrl}}/{{cargo_order_id}}/transport/{{transport_id}}/response/
+Authorization: Bearer {{access_token}}
+Accept: application/json
+
+### Идентификатор отклика [МОЖНО ПОСМОТРЕТЬ ДЕТАЛИ ГРУЗА]
+@response_id=230f2085-6d34-4c3a-be73-cf97af79e5b5
+
+### Отменить отклик от перевозчкаи на груз
+POST {{cargoUrl}}/{{cargo_order_id}}/response/cancel/
+Authorization: Bearer {{access_token}}
+Accept: application/json
+
+### Просмотреть список записей перевозчика [ACTIVE, WAITING, HISTORY]
+GET {{cargoUrl}}/carrier/general/?cargoCategory=ACTIVE&pageNumber=1&pageSize=5
+Authorization: Bearer {{access_token}}
+Accept: application/json
+
+### После принятия со стороны заказчика отклика перевозчика
+### Отмена исполнения заказа [ПЕРЕВОЗЧИК]
+POST {{cargoUrl}}/{{cargo_order_id}}/cancel/
+Authorization: Bearer {{access_token}}
+Accept: application/json
+
+### Отправить запрос на завершение исполнения заказа
+POST {{cargoUrl}}/{{cargo_order_id}}/endExecution/
+Authorization: Bearer {{access_token}}
+Accept: application/json
+
+### Идентификатор профиля, которому выставляется отзыв (комментируемый профиль)
+@profileId=
+
+### Метод для создания отзыва
+POST {{reviewUrl}}/profile/{{profileId}}/
+Authorization: Bearer {{access_token}}
+Content-Type: application/json
+
+{
+  "comment": "Неплохо справился с работой. Можно будет повторить контракт",
+  "rating": 4
+}
