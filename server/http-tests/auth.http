@@ -1,0 +1,52 @@
+### Метод для регистрации компании
+POST http://localhost:8080/api/v1/auth/register/
+Content-Type: application/json
+
+{
+  "username": "ufserRanom123",
+  "email": "ann.ten.tkdlove@mail.com",
+  "password": "SecurePass456!",
+  "legalType": "INDIVIDUAL",
+  "role": "CARRIER"
+}
+
+### Метод для авторизации
+POST http://localhost:8080/api/v1/auth/login/
+Content-Type: application/json
+
+{
+  "email": "ann.ten.tkdlove@mail.com",
+  "password": "SecurePass456!"
+}
+
+> {%
+    // Сохранение access_token из тела ответа
+    client.global.set("access_token", response.body.access_token);
+%}
+
+### здесь подставить переменную вручную
+@refresh_token="eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1ZnNlclJhbm9tMTIzIiwiaWF0IjoxNzQzNjIwNDM4LCJleHAiOjE3NDQyMjUyMzh9.e6wWanzNQX6nTco_Wz9i59dZXEPrtwS41dkHp1cF_1k"
+
+### Метод для обновления токена доступа
+POST http://localhost:8080/api/v1/auth/refresh-token/
+Set-Cookie: refreshToken={{refresh_token}}; Max-Age=604800; Expires=Mon, 24 Mar 2025 18:02:19 GMT; Path=/; HttpOnly
+
+### Метод для сбора пароля
+POST http://localhost:8080/api/v1/auth/password-recovery/
+Content-Type: application/json
+
+{
+  "email": "ann.ten.tkdlove@mail.com"
+}
+
+### Метод для установки нового пароля
+POST http://localhost:8080/api/v1/auth/reset-password/?token=jfQQDOLk0iLOqgvLgqFK5TQj_f0hTB0WOqxTyzSALi0
+Content-Type: application/json
+
+{
+  "newPassword": "k.,k.linux"
+}
+
+### Метод для выхода из системы
+POST http://localhost:8080/api/v1/auth/logout/
+Authorization: Bearer {{access_token}}
