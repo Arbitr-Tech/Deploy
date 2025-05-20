@@ -2,6 +2,7 @@ version: "3.9"
 
 services:
   cargo-way-app:
+    dns: 8.8.8.8
     build:
       context: ./server
       dockerfile: ./docker/Dockerfile
