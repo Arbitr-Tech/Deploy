@@ -1,0 +1,296 @@
+@use '../mixins' as m;
+@use '../variables' as v;
+@use '../utils' as u;
+
+.search,
+.genericList {
+    @include m.form-step-base(column, 1rem 2.2rem, auto);
+    margin-top: 5rem;
+    margin-inline: auto;
+    margin-bottom: 2rem;
+
+    &__form {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        position: relative;
+        margin-bottom: 1rem;
+        color: v.$font-dark-color;
+
+        &-row {
+            display: flex;
+            justify-content: space-between;
+
+            @include m.laptop {
+                flex-wrap: wrap;
+                gap: 1rem;
+            }
+        }
+
+        &-label {
+            @include m.center;
+            align-items: start;
+            flex-direction: column;
+            font-weight: 700;
+        }
+
+        &-input {
+            @include m.input-base;
+            width: 15rem;
+            margin-top: 1rem;
+
+            &--fromTo {
+                width: 5rem;
+            }
+        }
+
+        &-inputBox {
+            display: flex;
+            gap: 0.5rem;
+        }
+    }
+
+    &__choice {
+        display: flex;
+        justify-content: space-around;
+        margin: 2.2rem 0;
+        position: relative;
+
+        &-box {
+            @include m.box-overflow-y;
+            position: relative;
+
+            &-label {
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+                font-size: 1rem;
+            }
+
+            & span {
+                font-weight: 700;
+                margin-bottom: 0.5rem;
+            }
+
+            &:last-child::after {
+                display: none;
+            }
+        }
+
+        &::before {
+            @include m.line(-1rem, v.$noactive-color);
+        }
+
+        &::after {
+            @include m.line(12.125rem, v.$noactive-color);
+        }
+    }
+
+    &__btnBox {
+        display: flex;
+        gap: 1rem;
+        position: relative;
+
+        &-button {
+            @include m.button(v.$primary-color, v.$font-light-color);
+            margin-bottom: 1rem;
+        }
+
+
+    }
+
+    &__item {
+        border-bottom: 1px solid v.$primary-color;
+        border-radius: v.$border-radius;
+        display: grid;
+        grid-template-rows: repeat(auto-fill, minmax(3rem, auto));
+        margin-bottom: 1rem;
+        background-color: v.$font-light-color;
+        margin: 1rem;
+
+        &-text {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+
+            &--mylist {
+                grid-template-columns: repeat(7, 1fr);
+            }
+
+            &--driver,
+            &--transport {
+                grid-template-columns: repeat(5, 1fr);
+            }
+
+            @include m.tablet {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            @include m.mobile {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        &-btns {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+
+            @include m.tablet {
+                flex-direction: column;
+                width: 100%;
+            }
+        }
+
+        &-button {
+            @include m.button(v.$primary-color, v.$font-light-color);
+            max-width: 20rem;
+            margin-bottom: 1rem;
+        }
+
+        &-content {
+            padding: 0.5rem;
+            text-align: center;
+
+            @include m.tablet {
+                padding: 0.5rem;
+                margin-inline: 0;
+            }
+
+            &--hide {
+                @include m.tablet {
+                    display: none;
+                }
+
+                @include m.mobile {
+                    display: none;
+                }
+            }
+
+            &--status {
+                font-weight: 700;
+                color: v.$font-dark-color;
+            }
+        }
+
+        &--yellow {
+            background-color: v.$active-color;
+        }
+
+        @include m.tablet {
+            width: 90%;
+            justify-content: center;
+        }
+
+        // @include m.mobile {
+        //     width: 80%;
+        // }
+    }
+
+    &__result {
+        @include m.form-step-base(column, 1rem 0, 100%);
+        width: 100%;
+
+        &-header {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            font-weight: 700;
+            padding: 0.6rem;
+            border-bottom: 1px solid v.$primary-color;
+
+            &--mylist {
+                grid-template-columns: repeat(7, 1fr);
+            }
+
+            &--driver,
+            &--transport {
+                grid-template-columns: repeat(5, 1fr);
+                gap: 1rem;
+            }
+
+            @include m.tablet {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            @include m.mobile {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        &-list {
+            max-height: 30rem;
+            overflow-y: auto;
+            scrollbar-width: thin;
+
+            &--mylist {
+                max-height: 43rem;
+            }
+        }
+
+        &-title {
+            &--hide {
+                @include m.tablet {
+                    display: none;
+                }
+
+                @include m.mobile {
+                    display: none;
+                }
+            }
+        }
+
+        &--popup {
+            max-height: 17rem;
+        }
+    }
+}
+
+.searchPage {
+    @include m.center;
+    margin-bottom: 3rem;
+    flex-direction: column;
+    align-items: center;
+
+    &__formBox {
+        width: 100%;
+    }
+
+
+    &__title {
+        text-align: center;
+        color: v.$font-light-color;
+        font-size: 2.2rem;
+        font-weight: 400;
+
+        @include m.tablet {
+            font-size: 2rem;
+        }
+    }
+
+    &__empty {
+        @include m.form-step-base(column, 0, 100%);
+        height: 5rem;
+        text-align: center;
+        color: v.$font-dark-color;
+        font-weight: 400;
+    }
+
+    &__list {
+        width: 100%;
+
+        &-title {
+            color: v.$font-light-color; 
+            text-align: center;
+        }
+    }
+
+}
+
+.driverList {
+    &__result-header {
+        grid-template-columns: repeat(5, 1fr);
+    }
+
+    &__item-text {
+        grid-template-columns: repeat(5, 1fr);
+    }
+}

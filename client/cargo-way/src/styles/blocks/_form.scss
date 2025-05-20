@@ -1,0 +1,120 @@
+@use '../variables' as v;
+@use '../mixins' as m;
+
+.form {
+    @include m.form-step-base(column, 6rem 5rem, 35rem);
+
+    &--registration {
+        padding: 4rem 4rem 2rem;
+    }
+
+    &__title {
+        font-size: 2.875em;
+        font-weight: 800;
+        line-height: 1.05;
+        text-align: center;
+        margin-bottom: 2.2rem;
+        margin-top: -1rem;
+    }
+
+    &__radio {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        margin-bottom: 1.6rem;
+    }
+
+    &__simple {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        margin-bottom: 1.6rem;
+
+        &-input {
+            @include m.input-base;
+        }
+    }
+
+    &__label {
+        margin-bottom: 1rem;
+
+        & a {
+            color: v.$active-color;
+        }
+    }
+
+    // &__button {
+    //     @include m.button(v.$primary-color, v.$font-light-color);
+    // }
+
+    &__transition {
+        @include m.center;
+        flex-direction: column;
+
+        &-button {
+            @include m.button(v.$primary-color, v.$font-light-color);
+        }
+
+        &-textBox {
+            display: flex;
+            justify-content: space-between;
+            // gap: 1rem;
+        }
+
+        &-text {
+            font-size: 0.875rem; 
+            white-space: nowrap;
+        }
+
+        &-text a {
+            color: v.$active-color;
+            cursor: pointer;
+        }
+    }
+
+    // &__transition a {
+    // color: v.$active-color;
+    // cursor: pointer;
+    // }
+
+    @include m.mobile {
+        width: 55%;
+        padding: 3rem 2rem;
+
+        &__title {
+            font-size: 2rem;
+        }
+
+        &__simple {
+            align-items: center;
+
+            &-input {
+                width: 70%;
+            }
+        }
+
+        &__transition {
+            font-size: 0.75rem;
+
+            &-button {
+                width: 70%;
+                align-self: center;
+            }
+
+            &-text {
+                display: flex;
+                flex-direction: column;
+            }
+        }
+    }
+
+    @include m.tablet {
+        width: 75%;
+        padding: 3rem 2rem;
+
+        &__transition-textBox {
+            flex-direction: column;
+        }
+    }
+
+}

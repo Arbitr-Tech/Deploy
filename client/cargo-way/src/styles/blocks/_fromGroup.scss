@@ -1,0 +1,92 @@
+@use '../variables' as v;
+@use '../mixins' as m;
+
+.formGroup {
+    display: flex;
+    gap: 5rem;
+    text-align: left;
+    @include m.margin-center;
+    margin-bottom: 2.2rem;
+
+    & span {
+        width: 11rem;
+        font-weight: 700;
+        height: 1rem;
+        align-self: center;
+    }
+
+    &__label {
+        @include m.laptop {
+            width: 20%;
+        }
+        @include m.tablet {
+            width: 100%;
+        }
+    }
+
+    @include m.laptop {
+        width: 100%;
+        gap: 2rem;
+    }
+
+    @include m.tablet {
+        flex-direction: column;
+    }
+
+    &__group {
+        width: 50rem;
+        display: flex;
+        gap: 2.2rem;
+
+        &--img {
+            display: flex;
+            flex-direction: column;
+        }
+
+        &--company,
+        &--individual,
+        &--contact {
+            justify-content: center;
+            width: 40%;
+        }
+
+        // &--driver {
+        //     &__group {
+        //         @include m.tablet {
+        //             width: 10%;
+        //         }
+        //     }
+        // }
+
+        @include m.laptop {
+            flex-direction: column;
+            align-items: start;
+        }
+
+
+        @include m.tablet {
+            align-items: center;
+            width: 100%;
+            gap: 1rem;
+        }
+
+    }
+
+    &--company,
+    &--individual,
+    &--contact {
+        width: 80%;
+    }
+
+    &--driver {
+        width: 100%;
+        justify-content: space-between;
+        & span {
+            min-width: 50%;
+        }
+
+        // @include m.tablet {
+        //     align-items: center;
+        // }
+    }
+}
