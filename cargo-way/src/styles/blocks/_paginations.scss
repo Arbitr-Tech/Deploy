@@ -1,0 +1,26 @@
+@use '../mixins' as m;
+@use '../variables' as v;
+
+.pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 2.2rem;
+
+    &__btn {
+        @include m.button(v.$active-color, v.$font-light-color);
+        padding: 0.5rem 1rem;
+
+        &.disabled {
+            background-color: v.$font-light-color;
+            color: v.$font-dark-color;
+            cursor: not-allowed;
+        }
+    }
+
+    &__info {
+        font-size: 1rem;
+        color: v.$font-light-color;
+    }
+}

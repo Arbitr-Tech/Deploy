@@ -1,0 +1,16 @@
+@use './variables' as v;
+
+body {
+    background-color: #2C2C2C;
+    font-family: v.$font-family-primary;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    overflow-x: hidden;
+    position: relative;
+}
+
+input[type="date"]::-webkit-datetime-edit {
+    color: v.$primary-color;
+}

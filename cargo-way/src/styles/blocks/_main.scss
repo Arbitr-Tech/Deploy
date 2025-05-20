@@ -1,0 +1,334 @@
+@use '../mixins' as m;
+@use '../variables' as v;
+@use '../utils' as u;
+
+.main {
+    position: relative;
+
+    &__menu {
+        width: 100%;
+        height: 8rem;
+        position: relative;
+        z-index: 100;
+        overflow-y: visible;
+
+        &-topBar {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            transform: translateY(-100%);
+            animation: waveInMenu 1s ease-out forwards;
+            opacity: 0;
+            transform: translateY(-190%);
+        }
+    }
+
+    &__text {
+        display: flex;
+        flex-direction: column;
+        color: v.$font-light-color;
+        position: relative;
+
+        &-link {
+            display: flex;
+            flex-direction: column;
+            align-items: end;
+
+            @include m.tablet {
+                margin-top: 1rem;
+                align-items: start;
+            }
+
+            & a {
+                position: relative;
+                width: 25%;
+                margin-top: 1rem;
+                font-size: 1.1rem;
+                color: v.$active-color;
+                text-decoration: none;
+                transition: color 0.3s ease;
+                animation-name: titleAnimation;
+                animation-timing-function: ease-in;
+                animation-duration: 1.5s;
+
+                @include m.tablet {
+                    width: 50%;
+                }
+            }
+
+            & a::after {
+                content: '→';
+                display: block;
+                position: absolute;
+                color: v.$active-color;
+                right: 5.5rem;
+                top: -0.3rem;
+                font-size: 1.5rem;
+                opacity: 0;
+                transform: scale(0);
+                transition: transform 0.3s ease, opacity 0.3s ease, font-size 0.3s ease;
+
+                @include m.laptop {
+                    // width: 30%;
+                    left: 10rem;
+                }
+            }
+
+            & a:hover::after {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        &-label {
+            font-size: 3rem;
+            width: 75%;
+            text-transform: uppercase;
+            margin: 0;
+            line-height: 4rem;
+
+
+            animation-name: titleAnimation;
+            animation-timing-function: ease-in;
+            animation-duration: 1.5s;
+
+            & span {
+                color: v.$active-color;
+            }
+
+            @include m.tablet {
+                font-size: 2rem;
+                width: 90%;
+            }
+
+            @include m.mobile {
+                line-height: 2.5rem;
+            }
+        }
+
+        &-p {
+            text-align: left;
+            width: 25%;
+            align-self: flex-end;
+            line-height: 1.5rem;
+            font-weight: 300;
+            margin: 0;
+            animation-name: titleAnimation;
+            animation-timing-function: ease-in;
+            animation-duration: 1.5s;
+
+            @include m.tablet {
+                align-self: start;
+                width: 70%;
+            }
+        }
+    }
+
+    &__img {
+        position: relative;
+        width: 100%;
+        height: 31.25rem;
+        margin-bottom: -5rem;
+
+        @include m.laptop {
+            height: 26.25rem;
+            margin-bottom: -15rem;
+        }
+
+        @include m.tablet {
+            display: none;
+        }
+
+        & img {
+            position: absolute;
+            bottom: 10%;
+            top: 0;
+            animation: moveTruck 1.5s ease-out forwards;
+            height: 80%;
+
+            @include m.laptop {
+                height: 70%;
+                left: 0;
+                top: -6rem;
+            }
+        }
+    }
+
+    &__content {
+        width: 100%;
+    }
+
+    &__packageBox {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        position: relative;
+
+        &-header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 2rem;
+
+            @include m.tablet {
+                display: none;
+            }
+
+            @include m.laptop {
+                display: none;
+            }
+        }
+
+        &-text {
+            position: relative;
+            font-size: 10rem;
+            width: 100%;
+            letter-spacing: 1rem;
+            text-align: center;
+            text-transform: uppercase;
+            color: transparent;
+            margin: 0;
+            -webkit-text-stroke: 2px rgb(255, 255, 255);
+        }
+
+        &-img {
+            margin-top: -8rem;
+            transform: rotate(-33deg);
+        }
+
+        &-main {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        &-serchLabel {
+            font-size: 2rem;
+            width: 30%;
+            color: v.$font-light-color;
+            font-weight: 400;
+        }
+
+        &-motion {
+            width: 100%;
+        }
+
+        &::before {
+            display: block;
+            content: "";
+            position: absolute;
+            top: 6rem;
+            left: 44rem;
+            width: 34rem;
+            height: 22rem;
+            z-index: -100;
+            background: v.$font-dark-color;
+            transform: rotate(141deg);
+            border-radius: (56% 44% 25% 74% / 58% 61% 39% 42%);
+
+            @include m.laptop {
+                top: 7rem;
+                left: 40rem;
+                width: 24rem;
+                height: 14rem;
+            }
+        }
+
+        &::after {
+            display: block;
+            content: "";
+            position: absolute;
+            top: -15rem;
+            left: -9rem;
+            width: 39rem;
+            height: 25rem;
+            z-index: -100;
+            background: v.$font-dark-color;
+            transform: rotate(141deg);
+            border-radius: 81% 19% 42% 58% / 46% 73% 27% 54%;
+        }
+    }
+
+    &::after {
+        display: block;
+        content: "";
+        position: absolute;
+        top: 10rem;
+        left: 4rem;
+        width: 48rem;
+        height: 30rem;
+        z-index: -100;
+        background: v.$font-dark-color;
+        border-radius: 40% 103% 103% 30%/79% 94% 47% 61%;
+
+        @include m.laptop {
+            top: 13rem;
+            left: 3rem;
+            width: 37rem;
+            height: 23rem;
+        }
+    }
+}
+
+#main {
+    &::after {
+        display: block;
+        content: "";
+        position: absolute;
+        top: 10rem;
+        left: 4rem;
+        width: 48rem;
+        height: 30rem;
+        z-index: -100;
+        background: v.$font-dark-color;
+        transform: rotate(0deg);
+        border-radius: 40% 103% 103% 30%/79% 94% 47% 61%;
+
+        @include m.laptop {
+            top: 13rem;
+            left: 3rem;
+            width: 37rem;
+            height: 23rem;
+        }
+    }
+
+    &::before {
+        display: none;
+    }
+}
+
+@keyframes moveTruck {
+    0% {
+        right: -25rem;
+        /* За пределами экрана */
+    }
+
+    100% {
+        right: 20rem;
+    }
+}
+
+@keyframes waveInMenu {
+    0% {
+        transform: translateY(-100%);
+    }
+
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes titleAnimation {
+    0% {
+        transform: translateY(50px);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+
+}

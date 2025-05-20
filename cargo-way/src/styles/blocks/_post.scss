@@ -1,0 +1,382 @@
+@use '../mixins' as m;
+@use '../variables' as v;
+
+.cargoForm,
+.autoForm,
+.driverForm,
+.profileForm,
+.trailerForm {
+    @include m.form-step-base(column, 1rem 2.2rem, 70rem);
+    padding-top: 3.5rem;
+    max-width: 100%;
+
+    @include m.laptop {
+        max-width: 90%;
+    }
+
+    &__section {
+        display: flex;
+        justify-content: space-between;
+        position: relative;
+
+        &::before {
+            @include m.line(-1rem, v.$noactive-color);
+
+            @include m.tablet {
+                top: 33.5rem;
+            }
+        }
+
+        &::after {
+            @include m.line(16.125rem, v.$noactive-color);
+
+            @include m.tablet {}
+        }
+
+        @include m.tablet {
+            flex-direction: column
+        }
+    }
+
+    &__label {
+        @include m.margin-center;
+        margin-bottom: 2.8rem;
+
+        &-text {
+            font-weight: 700;
+        }
+    }
+
+    &__photo {
+        width: 90%;
+    }
+
+    &__input {
+        @include m.input-base;
+
+        @include m.laptop {
+            width: 80%;
+        }
+
+        @include m.mobile {
+            width: 75%;
+        }
+
+        &-group {
+            @include m.box-overflow-y;
+            margin-top: 0.5rem;
+        }
+
+        &-icon {
+            width: 30px;
+            height: 30px;
+            justify-self: center;
+        }
+
+        &--img {
+            max-width: 20rem;
+        }
+
+        &--short {
+            max-width: 6.5rem;
+        }
+
+        &--long {
+            width: 20rem;
+
+            @include m.laptop {
+                width: 13rem;
+            }
+
+            @include m.mobile {
+                width: 10rem;
+            }
+        }
+    }
+
+    &__inputBox {
+        @include m.input-base;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 20rem;
+        padding: 0.3rem 0.625rem;
+
+        @include m.mobile {
+            width: 70%;
+        }
+
+        &-input {
+            flex: 1;
+
+            & input {
+                width: 100%;
+                padding: 0;
+                border-color: transparent;
+                background-color: transparent;
+                color: v.$primary-color;
+            }
+        }
+
+        &-menu {
+            @include m.center;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+        }
+
+        &-ul {
+            position: absolute;
+            top: 0.75rem;
+            left: -5.375rem;
+            width: 20rem;
+            padding: 1rem;
+            background-color: v.$primary-color;
+            z-index: 5;
+            color: v.$font-light-color;
+            box-shadow: 10px 10px 20px 10px v.$box-shadow-color;
+            list-style: none;
+            border-radius: v.$border-radius;
+            opacity: 0;
+            /* Изначально скрыт */
+            transform: translateY(-10px);
+            /* Смещение вверх */
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            /* Переход */
+            pointer-events: none;
+            /* Отключает клики, когда элемент скрыт */
+        }
+
+        &-ul.show {
+            opacity: 1;
+            /* Показывает элемент */
+            transform: translateY(0);
+            /* Возвращает в исходное положение */
+            pointer-events: auto;
+            /* Включает клики */
+        }
+
+
+        &-li {
+            cursor: pointer;
+            width: 100%;
+            padding: 1rem;
+
+            &:hover {
+                background-color: v.$active-color;
+            }
+        }
+
+        &-btn {
+            @include m.button(v.$primary-color, v.$font-light-color);
+        }
+    }
+
+    &__textarea {
+        @include m.input-base;
+        width: 20rem;
+        font-family: v.$font-family-primary;
+        max-width: 20rem;
+
+        @include m.laptop {
+            max-width: 13rem;
+        }
+
+        @include m.mobile {
+            max-width: 10rem;
+        }
+    }
+
+    &__radio {
+        @include m.center;
+        align-items: center;
+        gap: 2.2rem;
+
+        @include m.laptop {
+            flex-direction: column;
+            align-items: start;
+        }
+    }
+
+    &__btnBox {
+        display: flex;
+        justify-content: start;
+        position: relative;
+        gap: 1rem;
+
+        &-button {
+            @include m.button(v.$primary-color, v.$font-light-color);
+            margin-bottom: 3rem;
+        }
+    }
+
+    &__trailer {
+        position: relative;
+
+        &-label {
+            font-size: 1.875rem;
+            margin-bottom: 2.2rem;
+        }
+
+        &::before {
+            @include m.line(-1rem, v.$noactive-color);
+        }
+
+        &--additional {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            &::before {
+                display: none;
+            }
+        }
+    }
+
+    &__photos {
+        @include m.center;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    &__imgBox {
+        @include m.imgBox;
+    }
+
+    &__loader {
+        @include m.loader;
+        margin-top: 1rem;
+    }
+
+    &__preview {
+        @include m.preview;
+    }
+
+    &__image {
+        @include m.image;
+        margin-top: 1rem;
+    }
+
+    &__button {
+        @include m.button(v.$primary-color, v.$font-light-color);
+
+
+        &:last-child {
+            margin-bottom: 0.5rem;
+        }
+    }
+
+    &__rating {
+        @include m.center;
+        gap: 2.2rem;
+        margin-bottom: 1rem;
+
+        & span {
+            color: v.$active-color;
+            font-weight: 700;
+        }
+    }
+
+    &__title {
+        margin-bottom: 2.2rem;
+    }
+}
+
+.cargo,
+.auto,
+.driver,
+.profile,
+.trailer,
+.trailerPage,
+.cargoList,
+.autoList {
+    margin-bottom: 5rem;
+
+    &__title {
+        text-align: center;
+        font-size: 2.875rem;
+        color: v.$font-light-color;
+        font-weight: 400;
+
+        @include m.tablet {
+            font-size: 2.2rem;
+        }
+    }
+
+    &__empty {
+        @include m.form-step-base(column, 0, 100%);
+        height: 8rem;
+        text-align: center;
+        color: v.$font-dark-color;
+        font-weight: 400;
+
+        &-button {
+            @include m.button(v.$primary-color, v.$font-light-color);
+            margin-inline: 2.2rem;
+        }
+    }
+
+    &__btnBox {
+        display: flex;
+        justify-content: center;
+    }
+
+    &__button {
+        @include m.button(v.$active-color, v.$font-light-color);
+        margin-top: 5rem;
+    }
+
+    &::after {
+        display: block;
+        content: "";
+        position: absolute;
+        top: 3rem;
+        left: 7rem;
+        width: 39rem;
+        height: 25rem;
+        z-index: -100;
+        background: v.$font-dark-color;
+        transform: rotate(141deg);
+        border-radius: 81% 19% 42% 58% / 46% 73% 27% 54%;
+    }
+
+    &::before {
+        display: block;
+        content: "";
+        position: absolute;
+        top: 27rem;
+        left: 55rem;
+        width: 34rem;
+        height: 22rem;
+        z-index: -100;
+        background: v.$font-dark-color;
+        transform: rotate(141deg);
+        border-radius: (14% 13% 50% 37%/15% 13% 93% 71%);
+
+        @include m.laptop {
+            top: 7rem;
+            left: 40rem;
+            width: 24rem;
+            height: 14rem;
+        }
+    }
+}
+
+.driver__content {
+    width: 100%;
+}
+
+.driverForm {
+    max-width: 50%;
+
+    &__categories {
+        @include m.laptop {
+            width: 70%;
+        }
+    }
+
+    @include m.mobile {
+        font-size: 0.8rem;
+    }
+}

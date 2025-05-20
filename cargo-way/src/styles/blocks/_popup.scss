@@ -1,0 +1,109 @@
+@use '../mixins' as m;
+@use '../variables' as v;
+
+.popup,
+.popupWithInput,
+.popupWithChoice,
+.popupWithRating {
+    position: fixed;
+    top:15%;
+    left: 27%;
+    z-index: 999;
+    max-width: 50%;
+    max-height: 65%;
+
+    @include m.form-step-base(column, 1rem 2.2rem, 40rem);
+
+    &__icon {
+        text-align: right;
+    }
+
+    &__text {
+        margin-bottom: 1rem;
+        max-height: 30rem;
+        overflow-y: auto;
+        scrollbar-width: thin;
+
+        &-item {
+            @include m.center;
+            align-items: center;
+            gap: 1rem;
+            padding: 8px 0;
+            border-bottom: 1px solid v.$active-color;
+            margin-left: 0;
+            transition: background-color 0.2s;
+        }
+
+        &-title {
+            font-weight: 700;
+            color: v.$font-dark-color;
+            display: inline-block;
+            min-width: 120px;
+            vertical-align: top;
+        }
+
+        &-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+    }
+
+    &__buttons {
+        @include m.center;
+        gap: 1rem;
+    }
+
+    &__button {
+        @include m.button(v.$primary-color, v.$font-light-color)
+    }
+
+    &__inputBox {
+        @include m.center;
+        flex-direction: column;
+        gap: 1rem;
+        margin-bottom: 1rem;
+
+        &-input {
+            @include m.input-base;
+        }
+    }
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 9999;
+    background-color: rgba(0, 0, 0, 0.349);
+    visibility: hidden;
+    opacity: 0;
+    transition: all .3s;
+    width: 100vw;
+    height: 100vh;
+
+
+    &--show {
+        opacity: 1;
+        visibility: visible;
+    }
+}
+
+.popupWithChoice {
+    background-color: v.$primary-color;
+    color: v.$font-light-color;
+
+    &__label {
+        display: inline-block;
+        font-size: 1.5rem;
+    }
+
+    &__content {
+        width: 100%; 
+        margin-top: 1rem;
+        overflow: hidden;
+    }
+}

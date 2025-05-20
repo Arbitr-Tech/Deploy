@@ -1,0 +1,126 @@
+@use '../mixins' as m;
+@use '../variables' as v;
+
+.profile {
+
+    &__inner {
+        @include m.center;
+        width: 100%;
+        justify-content: space-between;
+        gap: 2.2rem;
+
+        @include m.tablet {
+            flex-direction: column
+        }
+    }
+
+    &__userInfo {
+        // width: 50%;
+
+        &-main {
+            @include m.form-step-base(column, 1rem, 100%);
+            margin-bottom: 2rem;
+            background-color: v.$active-color;
+            color: v.$font-dark-color;
+            //     padding: 1rem;
+            //     border-radius: v.$border-radius;
+            //     box-shadow: 10px 8px 29.2px 0px v.$box-shadow-color;
+        }
+
+        &-contact {
+            @include m.form-step-base(column, 1rem, 100%);
+        }
+    }
+
+    &__main {
+        &-rating {
+            @include m.center;
+            justify-content: space-between;
+        }
+
+        &-title {
+            color: v.$primary-color;
+        }
+
+        &-data {
+            text-align: left;
+        }
+    }
+
+    &__companyInfo {
+        @include m.form-step-base(column, 1rem, 50%);
+        justify-content: end;
+
+        @include m.tablet {
+            width: 100%;
+            margin-top: 2.2rem;
+            height: auto;
+        }
+    }
+
+    &__mainInfo {
+        display: flex;
+        justify-content: space-between;
+        gap: 2.2rem;
+
+        &-userData {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 50%;
+            background-color: v.$form-background-color;
+            padding: 1rem;
+            border-radius: v.$border-radius;
+            box-shadow: 10px 8px 29.2px 0px v.$box-shadow-color;
+        }
+    }
+
+    &__rating-item {
+        & span {
+            font-weight: 700;
+            color: v.$font-light-color;
+        }
+    }
+
+    &__data-item {
+        & span {
+            font-weight: 700;
+            color: v.$primary-color;
+        }
+    }
+
+}
+
+.profileForm {
+
+    &--company,
+    &--individual,
+    &--contact {
+        padding: 0 0;
+        width: 100%;
+        box-shadow: none;
+    }
+
+    &__title {
+
+        &--company,
+        &--individual {
+            margin-top: -4.2rem;
+            margin-bottom: 2.7rem;
+            @include m.tablet {
+                margin-top: 0;
+            }
+        }
+    }
+
+    &__button {
+        &--company,
+        &--individual {
+            margin-top: 5rem;
+        }
+
+        &--yellow {
+            background-color: v.$active-color;
+        }
+    }
+}

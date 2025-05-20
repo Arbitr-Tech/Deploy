@@ -1,0 +1,19 @@
+@use 'normalize';
+@use 'globals';
+@use 'mixins';
+@use 'utils';
+@use 'variables';
+
+@use 'blocks/form';
+@use 'blocks/topbar';
+@use 'blocks/search';
+@use 'blocks/post'; 
+@use 'blocks/fromGroup'; 
+@use 'blocks/popup'; 
+@use 'blocks/verification'; 
+@use 'blocks/profile'; 
+@use 'blocks/paginations';  
+@use 'blocks/main';   
+@use 'blocks/info';    
+@use 'blocks/respond';    
+@use 'blocks/userProfile';    
