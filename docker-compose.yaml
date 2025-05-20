@@ -1,20 +1,35 @@
+version: "3.9"
+
 services:
+  cargo-way-app:
+    build:
+      context: ./server
+      dockerfile: ./docker/Dockerfile
+    env_file:
+      - .env
+    restart: unless-stopped
+    depends_on:
+      - cargo-way-postgres
+      - cargo-way-minio
+      - cargo-way-kafka
+    networks:
+      - app-network
+
   cargo-way-postgres:
     image: postgres:16-alpine
+    restart: unless-stopped
     environment:
       POSTGRES_DB: ${POSTGRES_DB}
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-    # volumes:
-    #   - "${POSTGRES_VOLUME_PATH}:/var/lib/postgresql/data"
-    ports:
-      - "${POSTGRES_EXTERNAL_PORT}:5432"
+    volumes:
+      - pg_data:/var/lib/postgresql/data
     networks:
       - app-network
 
-  minio:
+  cargo-way-minio:
     image: minio/minio:latest
-    container_name: minio
+    restart: unless-stopped
     environment:
       MINIO_ROOT_USER: ${MINIO_ROOT_USER}
       MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD}
@@ -22,87 +37,65 @@ services:
       MINIO_API_PORT: ${MINIO_API_PORT}
       MINIO_WEBUI_PORT: ${MINIO_WEBUI_PORT}
     volumes:
-      - "${MINIO_VOLUME_PATH}:/data"
-    ports:
-      - "${MINIO_API_PORT}:9000"
-      - "${MINIO_WEBUI_PORT}:9090"
-    command: [ "minio", "server", "/data", "--console-address", ":9090" ]
+      - ${MINIO_VOLUME_PATH}:/data
+    command: ["minio", "server", "/data", "--console-address", ":9090"]
     networks:
       - app-network
 
-  zookeeper:
+  cargo-way-zookeeper:
     image: confluentinc/cp-zookeeper:latest
-    container_name: zookeeper
+    restart: unless-stopped
     environment:
       ZOOKEEPER_CLIENT_PORT: 2181
       ZOOKEEPER_TICK_TIME: 2000
-    ports:
-      - "${ZOOKEEPER_HOST_PORT}:2181"
     networks:
       - app-network
 
-  kafka:
+  cargo-way-kafka:
     image: confluentinc/cp-kafka:latest
-    container_name: kafka
+    restart: unless-stopped
     depends_on:
-      - zookeeper
-    ports:
-      - "${KAFKA_INTERNAL_HOST_PORT}:9092"
-      - "${KAFKA_EXTERNAL_HOST_PORT}:29092"
+      - cargo-way-zookeeper
     environment:
       KAFKA_BROKER_ID: 1
-      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ZOOKEEPER_CONNECT: cargo-way-zookeeper:2181
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_EXTERNAL:PLAINTEXT
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092,PLAINTEXT_EXTERNAL://${EXTERNAL_HOST}:${KAFKA_EXTERNAL_HOST_PORT}
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://cargo-way-kafka:9092,PLAINTEXT_EXTERNAL://${EXTERNAL_HOST}:${KAFKA_EXTERNAL_HOST_PORT}
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
     networks:
       - app-network
 
-  mailhog:
+  cargo-way-mailhog:
     image: mailhog/mailhog:v1.0.1
+    restart: unless-stopped
     ports:
       - "${SMTP_PORT}:1025"
       - "${SMTP_UI_PORT}:8025"
     networks:
       - app-network
 
-  backend:
-    build:
-      context: ./server
-      dockerfile: ./docker/Dockerfile
-    env_file:
-      - .env
-    ports:
-      - "8080:8080"
-    depends_on:
-      - cargo-way-postgres
-      - minio
-      - kafka
-    networks:
-      - app-network
-
   frontend:
     build:
       context: ./client/cargo-way
+    restart: unless-stopped
     depends_on:
-      - backend
-    ports:
-      - "3000:80"
+      - cargo-way-app
     networks:
       - app-network
 
   nginx-proxy:
     image: nginx:1.25-alpine
+    restart: unless-stopped
     depends_on:
       - frontend
-      - backend
+      - cargo-way-app
     ports:
       - "80:80"
       - "443:443"
     volumes:
       - /etc/ssl/cargo-way-service.ru:/etc/ssl/cargo-way-service.ru:ro
-      - ./nginx-proxy.conf:/etc/nginx/conf.d/default.conf
+      - ./nginx-proxy.conf:/etc/nginx/conf.d/default.conf:ro
     networks:
       - app-network
 
