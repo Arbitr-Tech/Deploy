@@ -1,0 +1,114 @@
+services:
+  cargo-way-postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    # volumes:
+    #   - "${POSTGRES_VOLUME_PATH}:/var/lib/postgresql/data"
+    ports:
+      - "${POSTGRES_EXTERNAL_PORT}:5432"
+    networks:
+      - app-network
+
+  minio:
+    image: minio/minio:latest
+    container_name: minio
+    environment:
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD}
+      MINIO_BUCKET_NAME: ${MINIO_BUCKET_NAME}
+      MINIO_API_PORT: ${MINIO_API_PORT}
+      MINIO_WEBUI_PORT: ${MINIO_WEBUI_PORT}
+    volumes:
+      - "${MINIO_VOLUME_PATH}:/data"
+    ports:
+      - "${MINIO_API_PORT}:9000"
+      - "${MINIO_WEBUI_PORT}:9090"
+    command: [ "minio", "server", "/data", "--console-address", ":9090" ]
+    networks:
+      - app-network
+
+  zookeeper:
+    image: confluentinc/cp-zookeeper:latest
+    container_name: zookeeper
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+    ports:
+      - "${ZOOKEEPER_HOST_PORT}:2181"
+    networks:
+      - app-network
+
+  kafka:
+    image: confluentinc/cp-kafka:latest
+    container_name: kafka
+    depends_on:
+      - zookeeper
+    ports:
+      - "${KAFKA_INTERNAL_HOST_PORT}:9092"
+      - "${KAFKA_EXTERNAL_HOST_PORT}:29092"
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_EXTERNAL:PLAINTEXT
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092,PLAINTEXT_EXTERNAL://${EXTERNAL_HOST}:${KAFKA_EXTERNAL_HOST_PORT}
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+    networks:
+      - app-network
+
+  mailhog:
+    image: mailhog/mailhog:v1.0.1
+    ports:
+      - "${SMTP_PORT}:1025"
+      - "${SMTP_UI_PORT}:8025"
+    networks:
+      - app-network
+
+  backend:
+    build:
+      context: ./server
+      dockerfile: ./docker/Dockerfile
+    env_file:
+      - .env
+    ports:
+      - "8080:8080"
+    depends_on:
+      - cargo-way-postgres
+      - minio
+      - kafka
+    networks:
+      - app-network
+
+  frontend:
+    build:
+      context: ./client/cargo-way
+    depends_on:
+      - backend
+    ports:
+      - "3000:80"
+    networks:
+      - app-network
+
+  nginx-proxy:
+    image: nginx:1.25-alpine
+    depends_on:
+      - frontend
+      - backend
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /etc/ssl/ca.ru:/etc/ssl/cargo-way-service.ru:ro
+      - ./nginx-proxy.conf:/etc/nginx/conf.d/defaulr.conf
+    networks:
+      - app-network
+
+volumes:
+  pg_data:
+
+networks:
+  app-network:
+    driver: bridge
