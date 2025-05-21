@@ -95,8 +95,8 @@ services:
       - "80:80"
       - "443:443"
     volumes:
-      - /etc/ssl/cargo-way-service.ru:/etc/ssl/cargo-way-service.ru:ro
       - ./nginx-proxy.conf:/etc/nginx/conf.d/default.conf:ro
+      - /etc/ssl/cargo-way-service.ru:/etc/ssl/cargo-way-service.ru:ro
     networks:
       - app-network
 
