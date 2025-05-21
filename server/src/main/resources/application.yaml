@@ -64,7 +64,7 @@ jwt:
 
 frontend:
   recovery-password:
-    url: "https://random.site.net/password-reset/"
+    url: "https://cargo-way-service.ru/password-reset/"
     expiration-minutes: 15
 
 debug: true
