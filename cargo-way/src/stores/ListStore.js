@@ -29,7 +29,6 @@ class ListStore {
     async fetchCargoList(category, pageNumber) {
         try {
             const dataCargo = await getCargoByCategory(category, pageNumber);
-            console.log(dataCargo);
             this.cargoLists[category] = dataCargo.content;
             this.pages[category] = {
                 current: dataCargo.pageNumber,
@@ -43,9 +42,7 @@ class ListStore {
     async fetchCargoListFromCarrier(category, pageNumber) {
         try {
             const dataCargo = await getCargoFromCarrier(category, pageNumber);
-            console.log(dataCargo);
             this.cargoLists[category] = dataCargo.content;
-            // console.log(this.cargoLists[category]);
             this.pages[category] = {
                 current: dataCargo.pageNumber,
                 total: dataCargo.totalPages,
@@ -58,7 +55,6 @@ class ListStore {
     async fetchCargoListByFilters(formData, pageNumber) {
         try {
             const dataCargo = await getCargoByFiltres(formData, pageNumber);
-            console.log(dataCargo.content);
             this.cargoLists['FILTERS'] = dataCargo.content;
             this.pages['FILTERS'] = {
                 current: dataCargo.pageNumber,

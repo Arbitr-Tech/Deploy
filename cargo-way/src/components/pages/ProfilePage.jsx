@@ -15,9 +15,7 @@ const ProfilePage = observer(() => {
         const fetchData = async () => {
             try {
                 const data = await getProfileData();
-                console.log(data);
                 userStore.setUserFormData(data);
-                console.log("UF: ", userStore.userFormData);
             } catch (error) {
                 console.log(error);
                 toast.error('Произошла ошибка, попробуйте позже');
@@ -35,7 +33,6 @@ const ProfilePage = observer(() => {
     const handleClickMainInfoButton = async () => {
         try {
             const updatedData = userStore.getUpdatedFields();
-            console.log(updatedData);
             const newData = await updateProfileData(toJS(updatedData));
             userStore.setUserFormData(newData);
             toast.success("Успешно")

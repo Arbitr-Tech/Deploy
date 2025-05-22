@@ -22,7 +22,6 @@ const CargoPostPage = observer(({ typePage }) => {
         async function getData() {
             const data = await getDetailsCargo(id);
             cargoStore.setCargoFormDataFromServer(data.cargo);
-            console.log(data)
         };
 
         if (!location.pathname.startsWith("/cargo/edit")) {
@@ -51,7 +50,6 @@ const CargoPostPage = observer(({ typePage }) => {
     };
 
     const handleClickButton = async () => {
-        console.log(toJS(cargoStore.cargoFormData))
         const errors = validateCargo(cargoStore.cargoFormData);
 
         if (Object.keys(errors).length > 0) {

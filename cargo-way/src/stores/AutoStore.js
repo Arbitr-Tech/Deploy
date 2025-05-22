@@ -25,7 +25,7 @@ class AutoStore {
             volume: 0
         },
         trailersIds: [],
-        // photos: []
+        imagesIds: []
     };
 
     transportList = [];
@@ -74,7 +74,6 @@ class AutoStore {
             if(this.autoAdditionalTrailers) {
                 this.autoFormData.trailersIds = this.originalTransportFormData.trailersIds;
                 this.autoAdditionalTrailers = false;
-                console.log(this.autoFormData.trailersIds)
             } else {
                 this.autoAdditionalTrailers = true;
             };
@@ -95,7 +94,6 @@ class AutoStore {
     async fetchTransportList(pageNumber) {
         try {
             const dataTransport = await getTransportsByProfile(pageNumber);
-            console.log(dataTransport.content);
             this.transportList = dataTransport.content;
             this.page = { current: dataTransport.pageNumber, total: dataTransport.totalPages };
         } catch (error) {
@@ -106,7 +104,6 @@ class AutoStore {
     async fetchDriversListForTransport() {
         try {
             const dataDrivers = await getDriversForTransport();
-            console.log(dataDrivers);
             this.driversListForTransport = dataDrivers;
         } catch (error) {
             console.error("Ошибка при получении списка водителей для транспорта:", error);
@@ -116,7 +113,6 @@ class AutoStore {
     async fetchTrailersListForTransport() {
         try {
             const dataTrailers = await getTrailerForTransport();
-            console.log(dataTrailers);
             this.trailersListForTransport = dataTrailers;
         } catch (error) {
             console.error("Ошибка при получении списка прицепов для транспорта:", error);

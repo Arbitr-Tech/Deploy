@@ -44,7 +44,7 @@ const DriverPostPage = observer(({ typePage }) => {
 
         try {
             if (typePage === 'add') {
-                console.log(toJS(driverStore.driverFormData))
+                (toJS(driverStore.driverFormData))
                 await addDriver(toJS(driverStore.driverFormData));
                 toast.success('Успешно создано');
                 navigate('/driver/list');

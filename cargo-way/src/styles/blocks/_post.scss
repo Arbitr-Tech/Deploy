@@ -207,6 +207,15 @@
         &-button {
             @include m.button(v.$primary-color, v.$font-light-color);
             margin-bottom: 3rem;
+
+            @include m.mobile {
+                margin-top: 1rem;
+                margin-bottom: 0;
+            }
+        }
+
+        @include m.mobile {
+            flex-direction: column;
         }
     }
 
@@ -238,25 +247,68 @@
         @include m.center;
         flex-direction: column;
         gap: 1rem;
+        align-items: start;
+
+        &-button {
+            color: v.$active-color;
+            padding: 1rem;
+        }
+
+        &-gallery {
+            width: 100%;
+        }
+
+        &-loader {
+            @include m.loader;
+            margin-top: 1rem;
+        }
+
+        @include m.mobile {
+            align-items: center;
+        }
     }
 
-    &__imgBox {
-        @include m.imgBox;
+    &__gallery {
+        &-imgBox {
+            @include m.imgBox;
+        }
+
+        &-preview {
+            @include m.preview;
+        }
+
+        &-image {
+            @include m.image;
+            margin-top: 1rem;
+        }
+
+        &-button {
+            @include m.button(v.$primary-color, v.$font-light-color);
+
+
+            &:last-child {
+                margin-bottom: 0.5rem;
+            }
+        }
     }
 
-    &__loader {
-        @include m.loader;
-        margin-top: 1rem;
-    }
+    // &__imgBox {
+    //     @include m.imgBox;
+    // }
 
-    &__preview {
-        @include m.preview;
-    }
+    // &__loader {
+    //     @include m.loader;
+    //     margin-top: 1rem;
+    // }
 
-    &__image {
-        @include m.image;
-        margin-top: 1rem;
-    }
+    // &__preview {
+    //     @include m.preview;
+    // }
+
+    // &__image {
+    //     @include m.image;
+    //     margin-top: 1rem;
+    // }
 
     &__button {
         @include m.button(v.$primary-color, v.$font-light-color);

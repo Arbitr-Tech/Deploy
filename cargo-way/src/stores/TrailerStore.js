@@ -32,7 +32,6 @@ class TrailerStore {
     async fetchTrailerList(pageNumber) {
         try {
             const dataTrailers = await getTrailerByProfile(pageNumber);
-            console.log(dataTrailers.content);
             this.trailerList = dataTrailers.content;
             this.page = { current: dataTrailers.pageNumber, total: dataTrailers.totalPages };
         } catch (error) {

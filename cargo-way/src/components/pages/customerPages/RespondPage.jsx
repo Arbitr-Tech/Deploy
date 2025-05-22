@@ -24,7 +24,6 @@ const RespondPage = observer(() => {
             cargoStore.setCargoFormDataFromServer(data.cargo);
             delete data.cargo;
             responseStore.setResponseFormDataFromServer(data);
-            console.log(data)
         };
         getData();
     }, [location.pathname]);

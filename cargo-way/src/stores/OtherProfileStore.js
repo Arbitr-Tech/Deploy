@@ -41,7 +41,6 @@ class OtherProfileStore {
     async fetchReviewsList(profileId, reviewType, pageNumber) {
         try {
             const data = await getReviews(profileId, reviewType, pageNumber);
-            console.log(data)
             this.comment[reviewType] = data.content;
             this.pages[reviewType] = {
                 current: data.pageNumber,

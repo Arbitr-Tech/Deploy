@@ -29,7 +29,6 @@ const AuthorizationPage = observer(() => {
     };
 
     const handleNext = async () => {
-        console.log(toJS(autorizationStore.autorizationFormData));
 
         try {
             await login(toJS(autorizationStore.autorizationFormData));
