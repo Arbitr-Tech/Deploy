@@ -123,7 +123,6 @@ const SearchCargoPage = observer(() => {
 
     const handleClickChoice = async (item) => {
         try {
-            console.log(cargoId);
             await createResponse(cargoId, item.id);
             setPopupChoice(false);
             toast.success('Отклик успешно отправлен');

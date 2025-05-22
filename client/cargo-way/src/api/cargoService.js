@@ -183,8 +183,3 @@ export const endResponseByCustomer = async (cargoId) => {
         throw error;
     }
 };
-
-// ### Подтвердить запрос на завершение исполнения заказа
-// POST {{cargoUrl}}/{{cargo_order_id}}/endExecution/confirm/
-// Authorization: Bearer {{access_token}}
-// Accept: application/json

@@ -8,7 +8,7 @@ export const loadFile = async (file) => {
     const formData = new FormData();
     formData.append("file", file);
 
-    const response = await fetch(`${API_URL}/api/v1/file/`, {
+    const response = await fetch(`${API_URL}/api/v1/images/upload/`, {
         method: "POST",
         body: formData
     });
@@ -16,7 +16,6 @@ export const loadFile = async (file) => {
     if (!response.ok) throw new Error("Ошибка загрузки файла");
 
     const data = await response.json();
-    console.log(data);
     return data;
 };
 
@@ -33,8 +32,7 @@ export const refreshToken = async () => {
 
         const data = await response.json();
         localStorage.setItem("accessToken", data.access_token);
-        console.log("Новый токен:", data.access_token);
-        hasShownToast = false; // Сбрасываем флаг, так как токен успешно обновлен
+        hasShownToast = false;
         return data.access_token;
     } catch (error) {
         localStorage.removeItem("accessToken");

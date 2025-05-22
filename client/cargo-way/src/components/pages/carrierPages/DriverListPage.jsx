@@ -43,7 +43,7 @@ const DriverListPage = observer(() => {
     //     try {
 
     //     } catch (error) {
-    //         console.log(error);
+    //         (error);
     //         toast.error('Ошибка, попробуйте позже');
     //     }
     // }

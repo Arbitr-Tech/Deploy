@@ -27,7 +27,6 @@ class DriverStore {
     async fetchDriverList(pageNumber) {
         try {
             const dataDrivers = await getDriversByProfile(pageNumber);
-            console.log(dataDrivers.content);
             this.driverList = dataDrivers.content;
             this.page = {current: dataDrivers.pageNumber, total: dataDrivers.totalPages};
         } catch (error) {

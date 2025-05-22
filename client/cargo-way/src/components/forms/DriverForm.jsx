@@ -16,6 +16,7 @@ const DriverForm = ({ data, onChange, categoryChange }) => {
             ...provided,
             maxWidth: '70%',
             marginLeft: '1rem',
+            marginRigth: '1rem',
         }),
         control: (provided, state) => ({
             ...provided,
@@ -29,7 +30,8 @@ const DriverForm = ({ data, onChange, categoryChange }) => {
         }),
         placeholder: (provided) => ({
             ...provided,
-            color: '#2C2C2C'
+            color: '#2C2C2C',
+            wordBreak: 'break-all',
         }),
         dropdownIndicator: (provided) => ({
             ...provided,
@@ -47,7 +49,7 @@ const DriverForm = ({ data, onChange, categoryChange }) => {
         }),
         indicatorsContainer: (provided) => ({
             ...provided,
-            width: '100%',
+            width: '60%',
             overflow: 'hidden',
         }),
     };

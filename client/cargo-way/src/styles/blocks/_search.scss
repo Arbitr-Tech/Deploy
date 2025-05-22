@@ -25,6 +25,12 @@
                 flex-wrap: wrap;
                 gap: 1rem;
             }
+
+            @include m.tablet {
+                align-items: center;
+                justify-content: center;
+                text-align: center;
+            }
         }
 
         &-label {
@@ -32,6 +38,11 @@
             align-items: start;
             flex-direction: column;
             font-weight: 700;
+
+            @include m.mobile {
+                align-items: center;
+                justify-content: center;
+            }
         }
 
         &-input {
@@ -39,14 +50,29 @@
             width: 15rem;
             margin-top: 1rem;
 
+            @include m.mobile {
+                width: 10rem;
+            }
+
             &--fromTo {
                 width: 5rem;
+
+                @include m.mobile {
+                    width: 4rem;
+                }
             }
         }
 
         &-inputBox {
             display: flex;
             gap: 0.5rem;
+        }
+
+        @include m.mobile {
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 1rem;
         }
     }
 
@@ -75,14 +101,32 @@
             &:last-child::after {
                 display: none;
             }
+
+            @include m.tablet {
+                align-items: center;
+                justify-content: center;
+                text-align: center;
+            }
         }
 
         &::before {
             @include m.line(-1rem, v.$noactive-color);
+
+            @include m.tablet {
+                top: 23.75rem;
+            }
         }
 
         &::after {
             @include m.line(12.125rem, v.$noactive-color);
+        }
+
+        @include m.mobile {
+            margin-top: 0;
+            padding: 0;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
         }
     }
 
@@ -94,9 +138,20 @@
         &-button {
             @include m.button(v.$primary-color, v.$font-light-color);
             margin-bottom: 1rem;
+
+            @include m.mobile {
+                padding: 0.5rem;
+            }
         }
 
+        @include m.tablet {
+            align-items: center;
+            justify-content: center;
+        }
 
+        @include m.mobile {
+            flex-direction: column;
+        }
     }
 
     &__item {
@@ -278,7 +333,7 @@
         width: 100%;
 
         &-title {
-            color: v.$font-light-color; 
+            color: v.$font-light-color;
             text-align: center;
         }
     }

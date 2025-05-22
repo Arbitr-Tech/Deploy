@@ -19,6 +19,5 @@ export const registration = async (formData) => {
 
     const data = await response.json();
     localStorage.setItem("accessToken", data.access_token);
-    console.log(data)
     return data;
 };

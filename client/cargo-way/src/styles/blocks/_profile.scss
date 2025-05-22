@@ -22,13 +22,22 @@
             margin-bottom: 2rem;
             background-color: v.$active-color;
             color: v.$font-dark-color;
+
             //     padding: 1rem;
             //     border-radius: v.$border-radius;
             //     box-shadow: 10px 8px 29.2px 0px v.$box-shadow-color;
+            @include m.tablet {
+                padding: 0;
+            }
         }
 
         &-contact {
             @include m.form-step-base(column, 1rem, 100%);
+
+            @include m.tablet {
+                align-items: center;
+                padding: 0;
+            }
         }
     }
 
@@ -36,6 +45,18 @@
         &-rating {
             @include m.center;
             justify-content: space-between;
+
+            @include m.tablet {
+                padding-inline: 2.2rem;
+            }
+
+            @include m.mobile {
+                text-align: center;
+                flex-direction: column;
+                padding: 0 2.2rem;
+                align-items: center;
+                justify-content: center
+            }
         }
 
         &-title {
@@ -44,6 +65,17 @@
 
         &-data {
             text-align: left;
+            word-break: break-all;
+
+            @include m.tablet {
+                padding-inline: 2.2rem;
+            }
+
+            @include m.mobile {
+                align-items: center;
+                justify-content: center;
+                text-align: center;
+            }
         }
     }
 
@@ -52,9 +84,12 @@
         justify-content: end;
 
         @include m.tablet {
+            padding: 0;
             width: 100%;
-            margin-top: 2.2rem;
-            height: auto;
+            padding-top: 2.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
     }
 
@@ -79,6 +114,10 @@
         & span {
             font-weight: 700;
             color: v.$font-light-color;
+        }
+
+        @include m.mobile {
+            margin-top: 0;
         }
     }
 
@@ -107,6 +146,7 @@
         &--individual {
             margin-top: -4.2rem;
             margin-bottom: 2.7rem;
+
             @include m.tablet {
                 margin-top: 0;
             }
@@ -114,13 +154,26 @@
     }
 
     &__button {
+
         &--company,
         &--individual {
             margin-top: 5rem;
+
+            @include m.tablet {
+                margin-top: 0;
+            }
+
+            @include m.mobile {
+                padding: 0.5rem;
+            }
         }
 
         &--yellow {
             background-color: v.$active-color;
+        }
+
+        @include m.mobile {
+            padding: 0.5rem;
         }
     }
 }

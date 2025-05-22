@@ -29,7 +29,6 @@ const InfoOrderPage = observer(({ typePage }) => {
             cargoStore.setCargoFormDataFromServer(data.cargo);
             delete data.cargo;
             responseStore.setResponseFormDataFromServer(data);
-            console.log(responseStore.response)
         };
         getData();
     }, [location.pathname]);

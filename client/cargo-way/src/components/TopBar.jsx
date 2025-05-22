@@ -22,7 +22,6 @@ const TopBar = () => {
 
     const handleLogoutClick = () => {
         setIsPopupOpen(true);
-        console.log(role)
     };
 
     const handleConfirmLogout = async () => {

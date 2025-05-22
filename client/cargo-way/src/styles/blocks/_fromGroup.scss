@@ -21,6 +21,7 @@
         }
         @include m.tablet {
             width: 100%;
+            text-align: center;
         }
     }
 
@@ -48,6 +49,10 @@
         &--contact {
             justify-content: center;
             width: 40%;
+        }
+
+        &--photo {
+            width: 50%;
         }
 
         // &--driver {
@@ -88,5 +93,17 @@
         // @include m.tablet {
         //     align-items: center;
         // }
+    }
+
+    &--photo {
+        max-width: 45%;
+        gap: 4.5rem;
+        justify-self: start;  
+        margin: 0 0 2.2rem 0;
+
+        @include m.mobile {
+            gap: 2.2rem;
+            margin-bottom: 1rem;
+        }
     }
 }

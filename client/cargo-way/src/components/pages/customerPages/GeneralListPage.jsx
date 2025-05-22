@@ -107,7 +107,6 @@ const GeneralListPage = observer(() => {
     const handlePublishClick = async () => {
         if (!popupData.item) return;
         try {
-            console.log(popupData.item);
             if (popupData.item.visibilityStatus === "DRAFT") {
                 await publishCargo(popupData.item.id);
             } else {

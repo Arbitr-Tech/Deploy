@@ -34,8 +34,6 @@ const RegistrationPage = observer(() => {
             return;
         }
 
-        console.log(toJS(registrationStore.registrationFormData))
-
         try {
             await registration(toJS(registrationStore.registrationFormData));
             const data = await getProfileData();
