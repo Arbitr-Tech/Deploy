@@ -31,9 +31,6 @@ services:
   cargo-way-minio:
     image: minio/minio:latest
     restart: unless-stopped
-    ports:
-      - "9000:9000"
-      - "9090:9090"
     environment:
       MINIO_ROOT_USER: ${MINIO_ROOT_USER}
       MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD}
