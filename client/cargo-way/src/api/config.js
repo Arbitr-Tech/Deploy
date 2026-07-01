@@ -1,1 +1,1 @@
-export const API_URL = "http://cargoway-service.ru";
+export const API_URL = "http://localhost:80";
